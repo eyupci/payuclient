@@ -9,6 +9,11 @@ class PaymentResponse extends ResponseAbstract
     protected $transactionId;
 
     /**
+     * @var string
+     */
+    protected $enrolled3dsRedirectUrl;
+
+    /**
      * @param string $transactionId
      * @return $this;
      */
@@ -26,14 +31,29 @@ class PaymentResponse extends ResponseAbstract
     }
 
     /**
+     * @param string $enrolled3dsRedirectUrl
+     */
+    public function setEnrolled3dsRedirectUrl($enrolled3dsRedirectUrl) {
+        $this->enrolled3dsRedirectUrl = $enrolled3dsRedirectUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnrolled3dsRedirectUrl() {
+        return $this->enrolled3dsRedirectUrl;
+    }
+
+    /**
      * @param integer $status
      * @param string $code
      * @param string $message
      * @param string $transactionId
      */
-    public function __construct($status, $code, $message, $transactionId)
+    public function __construct($status, $code, $message, $transactionId, $enrolled3dsRedirect)
     {
         parent::__construct($status, $code, $message);
         $this->setTransactionId($transactionId);
+        $this->setEnrolled3dsRedirectUrl($enrolled3dsRedirect);
     }
 } 
