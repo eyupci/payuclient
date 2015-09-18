@@ -6,7 +6,7 @@ class PaymentRequestSerializer extends SerializerAbstract
     /**
      * @return array
      */
-    private function serializeOrder()
+    protected function serializeOrder()
     {
         /** @var $order \Payu\Component\Order */
         $order = $this->request->getOrder();
@@ -20,6 +20,10 @@ class PaymentRequestSerializer extends SerializerAbstract
             'ORDER_TIMEOUT'                => $order->getTimeout(),
             'CLIENT_IP'                    => $order->getClientIp()
         );
+
+        if ($order->getBackRef() != null) {
+            $data['BACK_REF'] = $order->getBackRef();
+        }
 
         if ((float) $order->getLoyaltyAmount() != 0) {
             $data['USE_LOYALTY_POINTS'] = 'YES';
@@ -38,7 +42,7 @@ class PaymentRequestSerializer extends SerializerAbstract
     /**
      * @return array
      */
-    private function serializeBilling()
+    protected function serializeBilling()
     {
         /** @var $billing  \Payu\Component\Billing */
         $billing = $this->request->getBilling();
@@ -60,7 +64,7 @@ class PaymentRequestSerializer extends SerializerAbstract
     /**
      * @return array
      */
-    private function serializeDelivery()
+    protected function serializeDelivery()
     {
         /** @var $delivery \Payu\Component\Delivery */
         $delivery = $this->request->getDelivery();
@@ -85,7 +89,7 @@ class PaymentRequestSerializer extends SerializerAbstract
     /**
      * @return array
      */
-    private function serializeBasket()
+    protected function serializeBasket()
     {
         $i    = 0;
         $data = array();

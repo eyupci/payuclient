@@ -28,6 +28,7 @@ class PaymentResponseParser implements ParserInterface
                      ResponseAbstract::STATUS_APPROVED : ResponseAbstract::STATUS_DECLINED;
         $transactionId = $statusCode == ResponseAbstract::STATUS_APPROVED ? (string) $xml->REFNO : null;
         $url3ds = $code == "3DS_ENROLLED" ? (string) $xml->URL_3DS : null;
-        return new PaymentResponse($statusCode, $code, $message, $transactionId, $url3ds);
+        $refNo = $xml->REFNO;
+        return new PaymentResponse($statusCode, $code, $message, $transactionId, $url3ds, $refNo);
     }
 }

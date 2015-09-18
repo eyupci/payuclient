@@ -33,6 +33,9 @@ abstract class SerializerAbstract
     {
         /** @var $card \Payu\Component\Card */
         $card = $this->request->getCard();
+        if (!$card) {
+            return array();
+        }
 
         return array(
             'CC_NUMBER' => $card->getNumber(),
@@ -58,4 +61,4 @@ abstract class SerializerAbstract
      * @return serialize
      */
     abstract public function serialize();
-} 
+}

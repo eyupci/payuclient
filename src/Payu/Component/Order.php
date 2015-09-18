@@ -49,6 +49,11 @@ class Order implements ComponentInterface
      */
     private $recurringPayment = false;
 
+    /**
+     * @var string
+     */
+    private $backRef;
+
     public function __construct(
         $code = null,
         $clientIp = null,
@@ -58,6 +63,7 @@ class Order implements ComponentInterface
         $paymentMethod = 'CCVISAMC',
         $date=null,
         $timeout = null,
+        $backRef = null,
         $recurringPayment = false
     ) {
         $this->setCode($code);
@@ -238,5 +244,26 @@ class Order implements ComponentInterface
         $this->recurringPayment = (bool)$recurringPayment;
 
         return $this;
+    }
+
+    /**
+     * Sets the back ref url.
+     *
+     * @param bool $recurringPayment back ref url
+     *
+     * @return self
+     */
+    public function setBackRef($backRef) {
+        $this->backRef = $backRef;
+        return $this;
+    }
+
+    /**
+     * Gets back ref url.
+     *
+     * @return string
+     */
+    public function getBackRef() {
+        return $this->backRef;
     }
 }

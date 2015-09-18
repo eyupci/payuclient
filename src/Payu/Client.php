@@ -4,12 +4,15 @@ namespace Payu;
 use Guzzle\Http\Exception\RequestException;
 use Payu\Builder\LoyaltyInquiryRequestBuilder;
 use Payu\Builder\PaymentRequestBuilder;
+use Payu\Builder\TokenRequestBuilder;
 use Payu\Exception\ConnectionError;
 use Payu\Parser\LoyaltyInquiryResponseParser;
 use Payu\Parser\PaymentResponseParser;
 use Payu\Parser\ResponseParser;
+use Payu\Parser\TokenResponseParser;
 use Payu\Request\LoyaltyInquiryRequest;
 use Payu\Request\PaymentRequest;
+use Payu\Request\TokenRequest;
 use Payu\Request\RequestAbstract;
 use Guzzle\Http\Client as httpClient;
 
@@ -45,6 +48,10 @@ class Client
         return new LoyaltyInquiryRequestBuilder($this->configuration);
     }
 
+    public function createTokenRequestBuilder() {
+        return new TokenRequestBuilder($this->configuration);
+    }
+
     /**
      * @param RequestAbstract $request
      * @param string $endpointUrl
@@ -60,6 +67,7 @@ class Client
                 CURLOPT_SSL_VERIFYHOST => false,
             )
         ));
+
         $httpRequest = $client->post($endpointUrl, null, $request->getRawData());
         try {
             return $httpRequest->send()->getBody();
@@ -79,6 +87,12 @@ class Client
         return $parser->parse();
     }
 
+    public function makeTokenRequest(TokenRequest $request) {
+        $rawResponse = $this->sendRequest($request, $this->configuration->getTokenEndPointUrl());
+        $parser = new ResponseParser(new TokenResponseParser(), $rawResponse);
+        return $parser->parse();
+    }
+
     /**
      * @param LoyaltyInquiryRequest $request
      * @return Response\LoyaltyInquiryResponse
@@ -89,4 +103,4 @@ class Client
         $parser = new ResponseParser(new LoyaltyInquiryResponseParser(), $rawResponse);
         return $parser->parse();
     }
-} 
+}

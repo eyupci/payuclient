@@ -11,7 +11,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function setUp() {
         $this->configuration = new Configuration('TestMerchantId', 'TestSecretKey', 'TestPaymentEndpointUrl',
-            'TestLoyaltyInquiryEndPointUrl');
+            'TestLoyaltyInquiryEndPointUrl', 'TestTokenEndPointUrl');
     }
 
     public function testConstructor() {
@@ -19,6 +19,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('TestSecretKey', $this->configuration->getSecretKey());
         $this->assertEquals('TestPaymentEndpointUrl', $this->configuration->getPaymentEndpointUrl());
         $this->assertEquals('TestLoyaltyInquiryEndPointUrl', $this->configuration->getLoyaltyInquiryEndPointUrl());
+        $this->assertEquals('TestTokenEndPointUrl', $this->configuration->getTokenEndPointUrl());
     }
 
     public function testSetMerchantId() {
@@ -39,5 +40,10 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testSetLoyaltyInquiryEndPointUrl() {
         $this->configuration->setLoyaltyInquiryEndPointUrl('TestLoyaltyInquiryEndPointUrlSetter');
         $this->assertEquals('TestLoyaltyInquiryEndPointUrlSetter', $this->configuration->getLoyaltyInquiryEndPointUrl());
+    }
+
+    public function testTokenEndPointUrl() {
+        $this->configuration->setTokenEndPointUrl('TestTokenEndPointUrlSetter');
+        $this->assertEquals('TestTokenEndPointUrlSetter', $this->configuration->getTokenEndPointUrl());
     }
 }
