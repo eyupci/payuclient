@@ -23,7 +23,7 @@ class TokenResponseParser implements ParserInterface
         $code = $responseJson->code;
         $statusCode = $code > 0 ? ResponseAbstract::STATUS_DECLINED : ResponseAbstract::STATUS_APPROVED;
         $message = $responseJson->message;
-        $transactionId = $code == 0 ? $responseJson->tran_ref_no : null;
+        $transactionId = $code == 0 && isset($responseJson->tran_ref_no) ? $responseJson->tran_ref_no : null;
         return new TokenResponse($statusCode, $code, $message, $transactionId);
     }
 }
